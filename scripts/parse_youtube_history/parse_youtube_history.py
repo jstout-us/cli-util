@@ -1,7 +1,22 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-repo: https://github.com/jstout-us/cli-util
+Parse the YouTube watch-history.html document exported from Google Takeout [2] and output
+as a CSV file in the current working directory as watch-history.csv.
+
+Script Output:
+
+Run Time:         31.5 seconds
+Records:
+    Total:        13969
+    Orphans:      2544      # Videos without an associated channel url
+    Deleted:      350       # Videos without associated channel and video urls
+    Parse Errors: 0
+
+References:
+===================================================================================================
+1.  repo: https://github.com/jstout-us/cli-util
+2.  https://takeout.google.com/
 """
 
 import argparse
@@ -43,7 +58,11 @@ class DeletedVideoError(Exception):
 
 
 def _cli():
-    """Parse cli options and return a dictionary."""
+    """Parse cli options.
+
+    :return: CLI Options
+    :rtype: dict
+    """
     parser = argparse.ArgumentParser(
             description=__doc__,
             formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -58,8 +77,17 @@ def _cli():
 
 
 def _parse_urls(links):
-    """Extract channel id, channel title, video id, and video title."""
+    """Extract channel id, channel title, video id, and video title.
 
+    :param links: List of :class:`BeautifulSoup.tag` objects representing 'a' tags found in the
+                  video entry tag.
+    :type links: list
+
+    :raises IndexError: No objects in links list; indicates a deleted video
+
+    :return: a list of expected field values.
+    :rtype: list
+    """
     channel_id = None
     channel_title = None
     video_id = None
@@ -82,7 +110,14 @@ def _parse_urls(links):
 
 
 def _parse_watched(text):
-    """Extract datetime from tag text and return iso formated datetime str."""
+    """Extract datetime from tag text and return iso formated datetime str.
+
+    :param text: The text contents of the video entry tag
+    :type text: str
+
+    :return: the watched time in isoformat as timezone UTC.
+    :rtype: str
+    """
 
     idx_left = sorted([x for x in [text.rfind(y) for y in MONTHS_SHORT] if x > -1],
                       reverse=True)[0]
@@ -95,7 +130,13 @@ def _parse_watched(text):
 
 
 def _parse_tag(tag):
-    """Extract and return relavant fields from the html tag."""
+    """Extract video fields from the :class:`BeautifulSoup.tag`.
+
+    :raises DeletedVideoError: No 'a' tags found in tag indicated a deleted video.
+
+    :return: All fields, with None for channel info on orphaned tags.
+    :rtype: dict
+    """
 
     try:
         values = _parse_urls(tag.find_all('a'))
@@ -108,7 +149,11 @@ def _parse_tag(tag):
 
 
 def setup(app):
-    """Do any required setup actions like read config file, create tmp dir, etc."""
+    """Initilize app data structure
+
+    :return: None
+    :rtype: NoneType
+    """
     app['info'] = {
         'time_start': datetime.now(),
         'records': {
@@ -126,7 +171,11 @@ def setup(app):
 
 
 def cleanup(app):
-    """Perform any necessary cleanup operations like deleting a tmp dir."""
+    """Output runtime stats to STDOUT.
+
+    :return: None
+    :rtype: NoneType
+    """
     time_run = (datetime.now() - app['info']['time_start']).total_seconds()
 
     print('Run Time:         {:.1f} seconds'.format(time_run))
@@ -139,8 +188,6 @@ def cleanup(app):
 
 
 def main(app):
-    """Actual business logic goes here."""
-
     with app['files']['src'].open() as fd_src:
         selectors = {"class": "content-cell mdl-cell mdl-cell--6-col mdl-typography--body-1"}
         soup = BeautifulSoup(fd_src.read(),
