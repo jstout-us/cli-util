@@ -176,15 +176,21 @@ def cleanup(app):
     :return: None
     :rtype: NoneType
     """
-    time_run = (datetime.now() - app['info']['time_start']).total_seconds()
 
-    print('Run Time:         {:.1f} seconds'.format(time_run))
-    print('Records:')
-    print('    Total:        {}'.format(app['info']['records']['count']))
-    print('    Orphans:      {}'.format(app['info']['records']['orphans']))
-    print('    Deleted:      {}'.format(app['info']['records']['deleted']))
-    print('    Parse Errors: {}'.format(app['info']['records']['errors']))
-    print()
+    try:
+        time_run = (datetime.now() - app['info']['time_start']).total_seconds()
+
+        print('Run Time:         {:.1f} seconds'.format(time_run))
+        print('Records:')
+        print('    Total:        {}'.format(app['info']['records']['count']))
+        print('    Orphans:      {}'.format(app['info']['records']['orphans']))
+        print('    Deleted:      {}'.format(app['info']['records']['deleted']))
+        print('    Parse Errors: {}'.format(app['info']['records']['errors']))
+        print()
+
+    except KeyError:
+        """Catch exit from argparse."""
+        pass
 
 
 def main(app):
