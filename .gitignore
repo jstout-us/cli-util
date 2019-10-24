@@ -1,2 +1,26 @@
 watch-history.csv
 
+# KDE Dolphin
+.directory
+
+# OSX
+.DS_Store
+
+# Vagrant files
+/.vagrant
+/*.log
+
+# Test Databases
+/*.sqlite3
+
+# Python Testing
+.tox
+.pytest_cache
+__pycache__
+*.egg-info
+.coverage
+target/
+build/
+dist/
+stage/
+*.spec
