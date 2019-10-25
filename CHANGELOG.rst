@@ -9,7 +9,10 @@ New Features
 ---------------------------------------------------------------------------------------------------
 
 - 1 - Add dev_status.py
+- 2 - Add clean project dir
 - 14 - Add standard vagrant dev tooling
+- 16 - Add make project dir
+
 
 Corrected Issues
 ---------------------------------------------------------------------------------------------------
