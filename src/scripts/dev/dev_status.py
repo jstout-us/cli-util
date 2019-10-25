@@ -15,6 +15,17 @@ import subprocess
 
 from pathlib import Path
 
+__author__      = 'Justin Stout'
+__copyright__   = 'Copyright 2019, {}'.format(__author__)
+__credits__     = [__author__]
+__license__     = 'MIT'
+__version__     = '1.0.0'
+__maintainer__  = __author__
+__email__       = 'justin@jstout.us'
+__status__      = 'Production/Stable'
+__doc__         = 'Check vagrant and git repo status in development root directory'
+
+
 def _git_get_repos(dev_root):
     """Walk root directory and yield all childer containing a .git folder
 
