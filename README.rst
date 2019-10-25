@@ -4,6 +4,16 @@ CLI Utilities
 
 A collection of my standard CLI scripts and utilities.
 
+Configuration
+===================================================================================================
+
+ENV VARS: (add to $HOME/.profile)
+
+- DEV_ROOT:                 Dev root directory ($HOME/dev)
+- DEV_CFG_ROOT:             Dev config root ($HOME/.config/dev)
+- DEV_CFG_ROOT_BKUP:        Backup directory
+- DEV_CFG_BKUP_GPG_KEY:     GPG key name
+
 
 Install
 ===================================================================================================
