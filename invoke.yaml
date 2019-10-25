@@ -1,0 +1,15 @@
+dev:
+  cc_name: cc-python-application
+  email: justin@jstout.us
+  full_name: Justin Stout
+  license: MIT
+  name: cli-util
+  short_description: CLI Utility Scripts
+  year: 2019
+
+scm:
+  type: git
+  name: cli-util
+  url: https://github.com/jstout-us/cli-util
+  user_name: jstout-us
+  versiontagprefix: v_
