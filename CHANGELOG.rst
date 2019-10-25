@@ -8,6 +8,7 @@ V 2.0.0
 New Features
 ---------------------------------------------------------------------------------------------------
 
+- 1 - Add dev_status.py
 - 14 - Add standard vagrant dev tooling
 
 Corrected Issues
