@@ -1,10 +1,8 @@
 import os
 
 from invoke import Collection
-from invoke import task
-from invoke import exceptions
 
-from js_invoke.scm import SCM
+from js_invoke.scm import SCM_TASKS
 
 
-ns = Collection(SCM)
+ns = Collection(SCM_TASKS)
