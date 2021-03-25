@@ -23,7 +23,7 @@ echo "Installing python dependencies"
 
 /usr/bin/env python3 -m pip install --upgrade bumpversion==0.5.3 \
                                               invoke==1.1.1 \
-                                              js-invoke==1.4.1 \
+                                              js-invoke==2.1.1 \
                                               pip \
                                               pycodestyle==2.4.0 \
                                               pydocstyle==2.1.1 \
