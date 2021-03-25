@@ -12,4 +12,4 @@ scm:
   name: cli-util
   url: https://github.com/jstout-us/cli-util
   user_name: jstout-us
-  versiontagprefix: v_
+  version_tag_prefix: v_
