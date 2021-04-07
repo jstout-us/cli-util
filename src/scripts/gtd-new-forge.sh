@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
 # Usage:
-#   gtd-new-project.sh PROJECT-NAME
+#   gtd-new-forge.sh FORGE-NAME
 #
-# Description: Create a new project directory at $HOME/PROJECT-NAME using standard template.
+# Description: Create a new forge directory at $HOME/PFORGE-NAME using standard template.
 #
 # Author: Justin Stout
 # Version: 1.0.0
@@ -22,15 +22,14 @@ fatal()   { echoerr "[FATAL]   $*" ; exit 1 ; }
 make () {
     local TARGET="$HOME/$1"
 
-    mkdir -p "${TARGET}"/"00 - Inbox"
+    mkdir -p "${TARGET}"/"00 - Inbox"/{"10 - Ideas","20 - Sources","30 - Questions"}
     mkdir -p "${TARGET}"/"10 - Notes"
     mkdir -p "${TARGET}"/"20 - Mgt & Plans"
     mkdir -p "${TARGET}"/"30 - Docs"
-    mkdir -p "${TARGET}"/"40 - Working"/{"MS01 - Bootstrap","MS02 - TBD","MS99 - Close"}
-    mkdir -p "${TARGET}"/"40 - Working"/"MS90 - Close Out"/{"10 - Lessons Learned","20 - Future Work"}
-    mkdir -p "${TARGET}"/"40 - Working"/"MS91 - Publish"/{"T10 - Refs","T20 - Outline","T30 - Draft 1"}
-    mkdir -p "${TARGET}"/"40 - Working"/"MS91 - Publish"/{"T31 - Draft 2","T90 - Finalize","T99 - Publish"}
-    mkdir -p "${TARGET}"/"99 - Closed"
+    mkdir -p "${TARGET}"/"60 - Children"
+    mkdir -p "${TARGET}"/"90 - Closed Projects"
+    mkdir -p "${TARGET}"/"91 - Lost Projects"
+    mkdir -p "${TARGET}"/"92 - OBE Projects"
 
 cat > "${TARGET}"/"20 - Mgt & Plans"/"00 - README.txt" << EOM
 README
@@ -57,30 +56,21 @@ cat > "${TARGET}"/"20 - Mgt & Plans"/"01 - Work Plan.txt" << EOM
 Work Plan
 ===================================================================================================
 
-*   MS01 - Bootstrap Project
+*   Release 0.1
 
-*   MS02 - TBD
+*   Release 0.2
 
-*   MS90 - Close Out
+*   Release 1.0
 
-*   MS91 - Publish
-
-*   MS99 - Close Project
+*   Release 2.0
 
 EOM
 
-cat > "${TARGET}/40 - Working/MS99 - Close/00 - Conclusions.txt" << EOM
-Conclusions
-===================================================================================================
-
-*   TBD
-
-EOM
 }
 
 if [[ $# -ne 1 ]];
 then
-    echo "Missing PROJECT-NAME"
+    echo "Missing FORGE-NAME"
 else
     make $1
 fi
