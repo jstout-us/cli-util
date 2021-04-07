@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Usage:
-#   git-new-project.sh PROJECT-NAME
+#   gtd-new-project.sh PROJECT-NAME
 #
 # Description: Create a new project directory at $HOME/PROJECT-NAME using standard template.
 #
