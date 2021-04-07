@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Usage:
-#   git-new-forge.sh FORGE-NAME
+#   gtd-new-forge.sh FORGE-NAME
 #
 # Description: Create a new forge directory at $HOME/PFORGE-NAME using standard template.
 #
