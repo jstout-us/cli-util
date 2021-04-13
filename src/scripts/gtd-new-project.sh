@@ -45,6 +45,13 @@ Objectives:
 2.  TBD
 
 
+Publish:
+=======================================
+
+Target:
+Interval: per milestone or on project close
+
+
 References:
 =======================================
 
@@ -74,6 +81,20 @@ Conclusions
 ===================================================================================================
 
 *   TBD
+
+EOM
+
+cat > "${TARGET}/99 - Closed/00 - Results.txt" << EOM
+Results
+===================================================================================================
+
+Outcome: {success, fail, lost, OBE}
+
+Summary:
+
+*   One
+*   Two
+*   Three
 
 EOM
 }
