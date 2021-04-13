@@ -45,6 +45,13 @@ Objectives:
 2.  TBD
 
 
+Publish:
+=======================================
+
+Target:
+Interval: per milestone or on project close
+
+
 References:
 =======================================
 
