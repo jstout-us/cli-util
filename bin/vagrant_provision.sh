@@ -15,6 +15,7 @@ echo "Add Ubuntu Dependencies"
 apt-get install -y build-essential \
                    git \
                    git-flow \
+                   pandoc \
                    python3-dev \
                    python3-pip \
                    tig
