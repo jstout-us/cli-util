@@ -26,8 +26,11 @@ echo "Installing python dependencies"
                                               invoke==1.1.1 \
                                               js-invoke==2.1.1 \
                                               pip \
+                                              pyclean \
                                               pycodestyle==2.4.0 \
                                               pydocstyle==2.1.1 \
+                                              pyinstaller \
                                               pylint==2.3.1 \
                                               pytest-cov==2.5.1 \
-                                              pytest==3.7.1
+                                              pytest==3.7.1 \
+                                              readability-lxml

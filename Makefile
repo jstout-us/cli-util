@@ -1,15 +1,17 @@
 clean:
 	rm -rf build
 	rm -rf dist
+	pyclean -v .
 
 article-clipper.pyz:
 	mkdir build
 	mkdir dist
-	cp -r src/article-clipper/ build/
-	/usr/bin/env python3 -m pip install boilerpy3 --target build/article-clipper
-
-	/usr/bin/env python3 -m zipapp -p "/usr/bin/env python3" -o dist/article-clipper \
-				 build/article-clipper
+	pyinstaller src/article-clipper/cli.py \
+				--distpath dist/ \
+				--workpath build/article-clipper \
+				--paths /usr/local/lib/python3.6/dist-packages \
+				--name article-clipper \
+				--onefile
 
 build: article-clipper.pyz
 

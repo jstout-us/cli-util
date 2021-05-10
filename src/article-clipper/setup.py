@@ -1,0 +1,20 @@
+setup(
+    name="article-clipper",
+    version="0.1.0",
+    description="Simplify web article and print HTML to STDOUT",
+    long_description=README,
+    long_description_content_type="text/markdown",
+    url="https://github.com/jstout-us/cli-util",
+    author="Justin Stout",
+    author_email="justin@jstout.us",
+    license="MIT",
+    classifiers=[
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+    ],
+    packages=["clipper"],
+    include_package_data=True,
+    install_requires=["readability-lxml"],
+    entry_points={"console_scripts": ["article-clipper=clipper.__main__:main"]},
+)
