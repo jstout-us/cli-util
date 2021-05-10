@@ -33,4 +33,5 @@ echo "Installing python dependencies"
                                               pylint==2.3.1 \
                                               pytest-cov==2.5.1 \
                                               pytest==3.7.1 \
-                                              readability-lxml
+                                              readability-lxml \
+                                              requests
