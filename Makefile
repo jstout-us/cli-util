@@ -1,3 +1,20 @@
+clean:
+	rm -rf build
+	rm -rf dist
+	pyclean -v .
+
+article-clipper.pyz:
+	mkdir build
+	mkdir dist
+	pyinstaller src/article-clipper/cli.py \
+				--distpath dist/ \
+				--workpath build/article-clipper \
+				--paths /usr/local/lib/python3.6/dist-packages \
+				--name article-clipper \
+				--onefile
+
+build: article-clipper.pyz
+
 install:
 	mkdir -p "${HOME}/bin"
 	cp "src/scripts/gtd-clean-dir.sh" "${HOME}/bin"
