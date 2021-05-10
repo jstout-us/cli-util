@@ -6,6 +6,8 @@ A simple utility for fetching and simplifying an web article for passing to pand
 import argparse
 import collections
 
+from boilerpy3 import extractors
+
 """
 Notes:
 
@@ -66,8 +68,31 @@ def cleanup(app):
 
 def main(app):
     """Actual business logic goes here."""
-    pass
+    # print(app['args']['url'])
 
+    extractor = extractors.ArticleExtractor()
+
+    doc = extractor.get_doc_from_url(app['args']['url'])
+    print(doc.title)
+    print("\n")
+    print(doc.content)
+
+    print(extractor.get_content_from_url(app['args']['url']))
+
+    # print()
+    # print('=========================')
+    # print()
+
+    # print(doc.title)
+    # print()
+    # print('=========================')
+    # print()
+    # print(doc.content)
+
+    # print(extractor.get_content_from_url(app['args']['url']))
+
+    # extractor = extractors.CanolaExtractor()
+    # print(extractor.get_content_from_url(app['args']['url']))
 
 if __name__ == '__main__':
     app = collections.defaultdict(dict)
