@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 import os
 import shutil
 import tempfile
@@ -14,7 +15,70 @@ import requests
 
 from goose3 import Goose
 from newspaper import Article
+from PyPDF4.pdf import PdfFileReader
+from PyPDF4.pdf import PdfFileWriter
+from PyPDF4.generic import ArrayObject
+from PyPDF4.generic import DecodedStreamObject
+from PyPDF4.generic import DictionaryObject
+from PyPDF4.generic import NameObject
+from PyPDF4.generic import createStringObject
+
 from readability import Document
+
+
+class PatchedPdfFileWriter(PdfFileWriter):
+    """Include add multiple attachments method from head"""
+
+    def attachFiles(self, files, cut_paths=True):
+        """
+        Embed multiple files inside the PDF.
+        Similar to addAttachment but receives a file path or a list of file paths.
+        Allows attaching more than one file.
+        :param files: Single file path (string) or multiple file paths (list of strings).
+        :param cut_paths: Display file name only in PDF if True,
+                        else display full parameter string or list entry.
+        """
+        if not isinstance(files, list):
+            files = [files]
+        files_array = ArrayObject()
+
+        for file in files:
+            fname = file
+            if cut_paths:
+                fname = os.path.basename(fname)
+            fdata = open(file, "rb").read()
+
+            # The entry for the file
+            file_entry = DecodedStreamObject()
+            file_entry.setData(fdata)
+            file_entry.update({NameObject("/Type"): NameObject("/EmbeddedFile")})
+
+            # The Filespec entry
+            efEntry = DictionaryObject()
+            efEntry.update({NameObject("/F"): file_entry})
+
+            filespec = DictionaryObject()
+            filespec.update(
+                {
+                    NameObject("/Type"): NameObject("/Filespec"),
+                    NameObject("/F"): createStringObject(fname),
+                    NameObject("/EF"): efEntry,
+                }
+            )
+
+            files_array.extend([createStringObject(fname), filespec])
+
+        # The entry for the root
+        embeddedFilesNamesDictionary = DictionaryObject()
+        embeddedFilesNamesDictionary.update({NameObject("/Names"): files_array})
+
+        embeddedFilesDictionary = DictionaryObject()
+        embeddedFilesDictionary.update(
+            {NameObject("/EmbeddedFiles"): embeddedFilesNamesDictionary}
+        )
+
+        # Update the root
+        self._root_object.update({NameObject("/Names"): embeddedFilesDictionary})
 
 
 def _get_clipper_meta():
@@ -52,7 +116,6 @@ def _get_paper_meta(url, html_raw):
 
 def main(app):
 
-
     with tempfile.TemporaryDirectory() as work_dir:
         TMP_PDF = work_dir + '/' + 'temp.pdf'
 
@@ -68,4 +131,31 @@ def main(app):
         out, errs = proc.communicate(input=html_clean.encode())
         proc.wait()
 
-        shutil.copyfile(TMP_PDF, app['args']['file_name'])
+        attach_names = ['meta_clip.json', 'meta_goose.json', 'meta_paper.json', 'raw.html']
+        attach_paths = [work_dir + '/' + x for x in attach_names]
+
+        for data, path in zip([meta_clip, meta_goose, meta_paper, html_raw], attach_paths):
+            with open(path, 'w') as fd_out:
+                if type(data) is dict:
+                    json.dump(data, fd_out, indent=4, sort_keys=True)
+
+                else:
+                    fd_out.write(data)
+
+
+        # shutil.copyfile(TMP_PDF, app['args']['file_name'])
+
+        with open(TMP_PDF, 'rb') as pdf_in:
+            reader = PdfFileReader(pdf_in)
+            writer = PatchedPdfFileWriter()
+
+            # FIXME
+            # def appendPagesFromReader(self, reader, afterPageAppend=None):
+            # I think this will suck the entire reader in?
+            for idx in range(reader.numPages):
+                writer.addPage(reader.getPage(idx))
+
+            writer.attachFiles(attach_paths)
+
+            with open(app['args']['file_name'], 'wb') as pdf_out:
+                writer.write(pdf_out)
