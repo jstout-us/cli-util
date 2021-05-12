@@ -9,7 +9,7 @@
 DEV_CFG_ROOT = ENV["DEV_CFG_ROOT"]
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "ubuntu/focal64"
 
   config.ssh.forward_agent = true
   config.vm.hostname = "cli-util"
