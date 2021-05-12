@@ -60,8 +60,8 @@ def main(app):
         html_clean = Document(html_raw).summary()
 
         meta_clip = _get_clipper_meta()
-        # meta_goose = Goose().extract(raw_html=html_raw).infos
-        # meta_paper = _get_paper_meta(app['args']['url'], html_raw)
+        meta_goose = Goose().extract(raw_html=html_raw).infos
+        meta_paper = _get_paper_meta(app['args']['url'], html_raw)
 
         opts = ['/usr/bin/pandoc', '-f', 'html', '-t', 'latex', '-o', TMP_PDF]
         proc = Popen(opts, stdin=PIPE)

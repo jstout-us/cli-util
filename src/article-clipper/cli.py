@@ -3,6 +3,7 @@ import collections
 
 from clipper.__main__ import main
 
+
 def _cli():
     """Parse cli options and return a dictionary."""
     parser = argparse.ArgumentParser(

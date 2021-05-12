@@ -7,6 +7,7 @@ article-clipper.pyz:
 	mkdir build
 	mkdir dist
 	pyinstaller src/article-clipper/cli.py \
+				--add-data "/usr/local/lib/python3.8/dist-packages/goose3:goose3" \
 				--distpath dist/ \
 				--workpath build/article-clipper \
 				--paths /usr/local/lib/python3.6/dist-packages \
