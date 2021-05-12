@@ -142,19 +142,11 @@ def main(app):
                 else:
                     fd_out.write(data)
 
-
-        # shutil.copyfile(TMP_PDF, app['args']['file_name'])
-
         with open(TMP_PDF, 'rb') as pdf_in:
             reader = PdfFileReader(pdf_in)
             writer = PatchedPdfFileWriter()
 
-            # FIXME
-            # def appendPagesFromReader(self, reader, afterPageAppend=None):
-            # I think this will suck the entire reader in?
-            for idx in range(reader.numPages):
-                writer.addPage(reader.getPage(idx))
-
+            writer.appendPagesFromReader(reader)
             writer.attachFiles(attach_paths)
 
             with open(app['args']['file_name'], 'wb') as pdf_out:
