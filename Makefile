@@ -9,6 +9,7 @@ clip-article:
 	pyinstaller src/clip-article/cli.py \
 				--add-data "/usr/local/lib/python3.8/dist-packages/goose3:goose3" \
 				--add-data "/usr/local/lib/python3.8/dist-packages/newspaper:newspaper" \
+				--add-data "src/clip-article/clipper:clipper" \
 				--distpath dist/ \
 				--workpath build/clip-article \
 				--paths /usr/local/lib/python3.6/dist-packages \

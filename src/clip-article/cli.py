@@ -1,5 +1,8 @@
 import argparse
 import collections
+import tempfile
+
+from pathlib import Path
 
 from clipper.__main__ import main
 
@@ -24,7 +27,9 @@ if __name__ == '__main__':
 
     try:
         app['args'] = _cli()
-        main(app)
+        with tempfile.TemporaryDirectory() as work_dir:
+            app['work_dir'] = Path(work_dir)
+            main(app)
 
     finally:
         pass
