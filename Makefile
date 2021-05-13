@@ -3,19 +3,19 @@ clean:
 	rm -rf dist
 	pyclean -v .
 
-article-clipper.pyz:
+clip-article:
 	mkdir build
 	mkdir dist
-	pyinstaller src/article-clipper/cli.py \
+	pyinstaller src/clip-article/cli.py \
 				--add-data "/usr/local/lib/python3.8/dist-packages/goose3:goose3" \
 				--add-data "/usr/local/lib/python3.8/dist-packages/newspaper:newspaper" \
 				--distpath dist/ \
-				--workpath build/article-clipper \
+				--workpath build/clip-article \
 				--paths /usr/local/lib/python3.6/dist-packages \
-				--name article-clipper \
+				--name clip-article \
 				--onefile
 
-build: article-clipper.pyz
+build: clip-article
 
 install:
 	mkdir -p "${HOME}/bin"
