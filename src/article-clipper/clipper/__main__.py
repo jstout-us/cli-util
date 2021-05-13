@@ -6,8 +6,10 @@ import tempfile
 
 from datetime import datetime
 from datetime import timezone
-from subprocess import Popen
+from io import StringIO
+from string import Template
 from subprocess import PIPE
+from subprocess import Popen
 
 import nanoid
 import nltk
@@ -24,6 +26,12 @@ from PyPDF4.generic import NameObject
 from PyPDF4.generic import createStringObject
 
 from readability import Document
+
+pdf_header = Template("""
+fontsize: 12pt
+geometry: margin=0.8in
+title-meta: $title
+""")
 
 
 class PatchedPdfFileWriter(PdfFileWriter):
@@ -118,6 +126,7 @@ def main(app):
 
     with tempfile.TemporaryDirectory() as work_dir:
         TMP_PDF = work_dir + '/' + 'temp.pdf'
+        PDF_HEADER = work_dir + '/' + 'header.yaml'
 
         html_raw = requests.get(app['args']['url']).text
         html_clean = Document(html_raw).summary()
@@ -126,7 +135,12 @@ def main(app):
         meta_goose = Goose().extract(raw_html=html_raw).infos
         meta_paper = _get_paper_meta(app['args']['url'], html_raw)
 
-        opts = ['/usr/bin/pandoc', '-f', 'html', '-t', 'latex', '-o', TMP_PDF]
+
+        with open(PDF_HEADER, 'w') as fd_out:
+            fd_out.write(pdf_header.substitute(title=meta_goose['title']))
+
+        opts = ['/usr/bin/pandoc', '--metadata-file', PDF_HEADER, '-f', 'html', '-t', 'latex', '-o', TMP_PDF]
+
         proc = Popen(opts, stdin=PIPE)
         out, errs = proc.communicate(input=html_clean.encode())
         proc.wait()
