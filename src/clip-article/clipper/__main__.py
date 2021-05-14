@@ -15,9 +15,15 @@ def main(app):
     attachments=[util.write_attach(app['work_dir'], name, value) for (name, value) in
         zip(names, values)]
 
+    title_block = app['work_dir'] / 'title_block.md'
+
+    with title_block.open('w') as fd_out:
+        fd_out.write(f"# {meta_goose['title']}")
+
     article.clip(
         html=html_clean,
         header=util.get_resource_path('article-header.yaml'),
+        before_body = title_block,
         attachments=attachments,
         file_name=app['args']['file_name']
         )

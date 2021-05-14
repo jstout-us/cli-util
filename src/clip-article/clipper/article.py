@@ -45,13 +45,14 @@ def _html_to_markdown(html):
     return result.stdout
 
 
-def _html_to_pdf(header, markdown, file_name):
+def _html_to_pdf(header, markdown, before_body, file_name):
 
-    args = ['/usr/bin/pandoc', header.as_posix(), markdown.as_posix(), '-t', 'latex', '-o', file_name.as_posix()]
+    args = ['/usr/bin/pandoc', header.as_posix(), before_body.as_posix(), markdown.as_posix(),
+            '-t', 'latex', '-o', file_name.as_posix()]
     subprocess.run(args)
 
 
-def clip(html, header, attachments, file_name):
+def clip(html, header, before_body, attachments, file_name):
 
      with tempfile.TemporaryDirectory() as work_dir:
         tmp_pdf = Path(work_dir) / 'tmp_pdf.pdf'
@@ -60,7 +61,7 @@ def clip(html, header, attachments, file_name):
         with markdown.open('wb') as fd_out:
             fd_out.write(_html_to_markdown(html))
 
-        _html_to_pdf(header, markdown, tmp_pdf)
+        _html_to_pdf(header, markdown, before_body, tmp_pdf)
 
         import shutil
         shutil.copyfile(tmp_pdf.as_posix(), file_name)
