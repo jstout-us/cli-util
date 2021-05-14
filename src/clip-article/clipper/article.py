@@ -14,6 +14,7 @@ import readability
 import nltk
 import newspaper
 
+from . import pdf
 
 def _get_paper_meta(url, html_raw):
     nltk.download('punkt')
@@ -63,8 +64,11 @@ def clip(html, header, before_body, attachments, file_name):
 
         _html_to_pdf(header, markdown, before_body, tmp_pdf)
 
-        import shutil
-        shutil.copyfile(tmp_pdf.as_posix(), file_name)
+        # import shutil
+        # shutil.copyfile(tmp_pdf.as_posix(), file_name)
+
+        # add_attachments(pdf_in, pdf_out, attachments)
+        pdf.add_attachments(tmp_pdf, file_name, attachments)
 
 
 def fetch(url):

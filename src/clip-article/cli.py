@@ -15,7 +15,7 @@ def _cli():
             argument_default=argparse.SUPPRESS)
 
     parser.add_argument('url', help="Article URL")
-    parser.add_argument('file_name', help="Output File Name")
+    parser.add_argument('file_name', type=Path, help="Output File Name")
 
     args = parser.parse_args()
 
