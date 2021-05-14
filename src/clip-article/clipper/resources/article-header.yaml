@@ -1,0 +1,9 @@
+---
+fontsize: 12pt
+geometry: margin=0.8in
+header-includes:
+- |
+  ```{=latex}
+  \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+  ```
+---
