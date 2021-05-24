@@ -18,6 +18,10 @@ clip-article:
 
 build: clip-article
 
+lint:
+	pylint src/clip-article/cli.py
+	pylint src/clip-article/clipper/
+
 install:
 	mkdir -p "${HOME}/bin"
 	cp "src/scripts/gtd-clean-dir.sh" "${HOME}/bin"
