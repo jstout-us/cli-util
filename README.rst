@@ -26,8 +26,10 @@ Ubuntu
 .. code-block:: console
 
     $ sudo apt update
-    $ sudo apt install -y python3-bs4 \
-                          python3-dateutil
+    $ sudo apt install -y pandoc \
+                          python3-bs4 \
+                          python3-dateutil \
+                          texlive-latex-extra
 
     $ make install
 
