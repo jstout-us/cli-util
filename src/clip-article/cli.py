@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""PyInstaller Entry Point."""
+"""Clip web article as a cleaned/simplified PDF file with metadata."""
 import argparse
 import collections
 import tempfile
