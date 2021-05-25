@@ -1,7 +1,7 @@
 setup(
     name="article-clipper",
-    version="0.1.0",
-    description="Simplify web article and print HTML to STDOUT",
+    version="1.0.0",
+    description="Clip web article as a cleaned/simplified PDF file with metadata.",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/jstout-us/cli-util",
