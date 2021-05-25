@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""PDF Reader and Writer Classes."""
 import os
 
 import PyPDF4
@@ -42,7 +43,7 @@ class PdfFileWriter(PyPDF4.pdf.PdfFileWriter):
             file_entry.update({NameObject("/Type"): NameObject("/EmbeddedFile")})
 
             # The Filespec entry
-            efEntry = DictionaryObject()
+            efEntry = DictionaryObject()    # pylint: disable=invalid-name
             efEntry.update({NameObject("/F"): file_entry})
 
             filespec = DictionaryObject()
@@ -57,10 +58,10 @@ class PdfFileWriter(PyPDF4.pdf.PdfFileWriter):
             files_array.extend([createStringObject(fname), filespec])
 
         # The entry for the root
-        embeddedFilesNamesDictionary = DictionaryObject()
+        embeddedFilesNamesDictionary = DictionaryObject() # pylint: disable=invalid-name
         embeddedFilesNamesDictionary.update({NameObject("/Names"): files_array})
 
-        embeddedFilesDictionary = DictionaryObject()
+        embeddedFilesDictionary = DictionaryObject() # pylint: disable=invalid-name
         embeddedFilesDictionary.update(
             {NameObject("/EmbeddedFiles"): embeddedFilesNamesDictionary}
         )
@@ -70,12 +71,21 @@ class PdfFileWriter(PyPDF4.pdf.PdfFileWriter):
 
 
 def add_attachments(pdf_in, pdf_out, attachments):
-    with pdf_in.open('rb') as fd_in:
-        reader = PdfFileReader(pdf_in.as_posix())
-        writer = PdfFileWriter()
+    """Embedd atachments within PDF file.
 
-        writer.appendPagesFromReader(reader)
-        writer.attach_files(attachments)
+    :param pdf_in: path to source pdf file
+    :type pdf_in: Path()
+    :param pdf_out: path to output pdf file
+    :type pdf_out: Path()
+    :param attachments: List of file attachment paths
+    :type attachments: [Path()]
+    :return: None
+    """
+    reader = PdfFileReader(pdf_in.as_posix())
+    writer = PdfFileWriter()
 
-        with pdf_out.open('wb') as fd_out:
-            writer.write(fd_out)
+    writer.appendPagesFromReader(reader)
+    writer.attach_files(attachments)
+
+    with pdf_out.open('wb') as fd_out:
+        writer.write(fd_out)
